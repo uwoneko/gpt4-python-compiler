@@ -18,8 +18,9 @@ class MagicFunctionTransformer(ast.NodeTransformer):
     def visit_Call(self, node):
         if isinstance(node.func, ast.Name) and node.func.id in ['magic', 'magic_advanced']:
             if node.func.id == 'magic':
-                description = node.args
+                description, *args = node.args
                 function_name = description.s.replace(' ', '_')
+                description = description.s
                 print(f'Working on magic "{description}" call at {node.lineno}:{node.col_offset}')
             elif node.func.id == 'magic_advanced':
                 function_name, description = node.args
