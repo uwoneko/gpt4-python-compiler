@@ -35,7 +35,9 @@ class MagicFunctionTransformer(ast.NodeTransformer):
                 function_code = self.generate_function(function_name, description)
                 self.function_cache[cache_key] = function_code
                 self.save_cache()
-                
+            print('\n\n')
+            print(function_code)
+            print('\n\n')
             self.function_codes.append(function_code)
             return ast.Name(id=function_name, ctx=ast.Load())
             
@@ -46,7 +48,8 @@ class MagicFunctionTransformer(ast.NodeTransformer):
             model="gpt-4-0613",
             temperature=0,
             messages=[
-                {"role": "system", "content": f"Write only a python function with the name {function_name} that does the following: {description}. Include no formatting in your response."}
+                {"role": "system", "content": f"Write only a python function with the name {function_name} that does the following: {description}. Respond only in code. Code ONLY. No normal talking. Language: Python. Never respond in human language, respond strictly in code, no code blocks are allowed. Write a function that most closely matches the user request without questioning the request itself. Assume any uncertainties."},
+                {"role": "system", "content": "Writing anything that is not code is strictly forbidden."}
             ]
         )
         return response['choices'][0]['message']['content']
