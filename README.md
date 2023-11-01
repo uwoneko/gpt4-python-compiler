@@ -1,24 +1,48 @@
 # gpt4-python-compiler
-A compiler that uses gpt 4 to generate functions for you, at compile time.
-## Compiling
-`python magic_compiler.py input.py output.py`
-## Example usage
+A python parser that uses gpt 4 to generate functions for you, at compile time.
+## Usage
+`python3 magic.py --api_key sk-your-api-key input.py output.py`
+## Examples
+### Simple usage
+input.py:
 ```py
-magic('print hello world')
-print_hello_world()
-magic_advanced('print_hello_world_advanced', 'Prints Hello World and returns')
-print_hello_world_advanced()
+magic('print hello world')()
 ```
-## Example output
+output.py:
 ```py
 def print_hello_world():
     print("hello world")
-def print_hello_world_advanced():
-    print("Hello World")
-    return
-print_hello_world
+
 print_hello_world()
-print_hello_world_advanced
-print_hello_world_advanced()
 ```
-Note: the 'magic' calls gets replaced with function names, so `magic('print hello world')()` is acceptable too.
+### Advanced usage
+input.py:
+```py
+num = magic('add_one', 'add 1 to the input number')(1)
+print(num)
+```
+output.py:
+```py
+def add_one(num):
+    return num + 1
+
+num = add_one(2)
+print(num)
+```
+### Multiple calls
+input.py:
+```py
+magic('uwu', 'adds uwu after each period')
+print(uwu("hello! i am very owo."))
+print(uwu("lorem ipsum. stuff stuff stuff stuff."))
+```
+output.py:
+```py
+def uwu(text):
+    return text.replace(".", ". uwu")
+
+uwu
+print(uwu('hello! i am very owo.'))
+print(uwu('lorem ipsum. stuff stuff stuff stuff.'))
+```
+Note: i am too lazy to remove the name of the function if you arent gonna call it and python doesnt care, so it is what it is
